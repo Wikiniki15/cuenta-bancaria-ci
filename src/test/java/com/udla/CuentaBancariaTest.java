@@ -1,6 +1,7 @@
 package com.udla;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -46,5 +47,20 @@ class CuentaBancariaTest {
         CuentaBancaria cuenta = new CuentaBancaria("Ana Lopez", 100.0);
 
         assertThrows(IllegalStateException.class, () -> cuenta.retirar(500.0));
+    }
+
+    @Test
+    void deberiaLanzarErrorAlRetirarMontoNegativo() {
+        CuentaBancaria cuenta = new CuentaBancaria("Ana Lopez", 500.0);
+
+        assertThrows(IllegalArgumentException.class, () -> cuenta.retirar(-50.0));
+    }
+
+    @Test
+    void deberiaVerificarMismoTitular() {
+        CuentaBancaria cuenta = new CuentaBancaria("Ana Lopez", 500.0);
+
+        assertTrue(cuenta.esMismoTitular("Ana Lopez"));
+        assertFalse(cuenta.esMismoTitular("Juan Perez"));
     }
 }
